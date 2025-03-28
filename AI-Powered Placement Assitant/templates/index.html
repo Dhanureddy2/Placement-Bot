@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Placement Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kqDf7MmNV8lwOlgftt3vxKfz5A7Fq4r4ysrl5ChO/aI8HeIA8SjRMYZJoWiAzLSUMMIvsxETSYsQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #007BFF, #00D4FF);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007BFF;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: #00D4FF;
+            font-size: 2rem;
+        }
+
+        textarea {
+            width: calc(100% - 50px);
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            outline: none;
+            resize: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #0056d2;
+            transform: scale(1.05);
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef;
+            color: #333;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #fff;
+            text-align: center;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Placement <span>Assistant</span></h1>
+        <textarea id="userMessage" rows="4" placeholder="Type your message here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+        <div id="chatResponse" class="response"></div>
+    </div>
+    
+
+    <footer>
+        <p>© 2025 AI-Powered Placement Assistant. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function sendMessage() {
+            const userMessage = document.getElementById("userMessage").value;
+            const responseElement = document.getElementById("chatResponse");
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                });
+                
+                const data = await response.json();
+                responseElement.textContent = data.reply;
+            } catch (error) {
+                responseElement.textContent = "Error: Unable to connect to the chatbot server.";
+            }
+        }
+    </script>
+</body>
+</html>
